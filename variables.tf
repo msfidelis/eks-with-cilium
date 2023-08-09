@@ -64,6 +64,26 @@ variable "cilium_hubble_host" {
 }
 
 ##################################
+#        Jaeger Configs          #
+##################################
+
+variable "jaeger_host" {
+  type    = string
+  default = "jaeger.msfidelis.com.br"
+}
+
+
+##################################
+#        Grafana Configs         #
+##################################
+
+variable "grafana_host" {
+  type    = string
+  default = "grafana.msfidelis.com.br"
+}
+
+
+##################################
 #             ADDONS             #
 ##################################
 
@@ -110,7 +130,7 @@ variable "argo_rollouts_toggle" {
 variable "keda_toggle" {
   type        = bool
   description = "Enable Keda Installation"
-  default     = true
+  default     = false
 }
 
 variable "cluster_autoscaler_toggle" {
@@ -122,6 +142,12 @@ variable "cluster_autoscaler_toggle" {
 variable "descheduler_toggle" {
   type        = bool
   description = "Enable Descheduler Installation"
+  default     = false
+}
+
+variable "jaeger_toggle" {
+  type        = bool
+  description = "Enable Jaeger Installation"
   default     = false
 }
 

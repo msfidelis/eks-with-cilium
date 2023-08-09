@@ -7,7 +7,7 @@ resource "helm_release" "cilium" {
 
   create_namespace = true
 
-  version = "1.13"
+  version = "1.14"
 
   set {
     name  = "eni.enabled"
@@ -96,6 +96,16 @@ resource "helm_release" "cilium" {
   }
 
   set {
+    name  = "hubble.prometheus.enabled"
+    value = true
+  }
+
+  set {
+    name  = "hubble.metrics.serviceMonitor.enabled"
+    value = true
+  }
+
+  set {
     name  = "hubble.metrics.enableOpenMetrics"
     value = true
   }
@@ -107,6 +117,11 @@ resource "helm_release" "cilium" {
 
   set {
     name  = "prometheus.enabled"
+    value = true
+  }
+
+  set {
+    name  = "prometheus.serviceMonitor.enabled"
     value = true
   }
 
@@ -132,6 +147,23 @@ resource "helm_release" "cilium" {
   ]
 }
 
+resource "helm_release" "tetragon" {
+  name       = "tetragon"
+  chart      = "tetragon"
+  repository = "https://helm.cilium.io/"
+  namespace  = "kube-system"
+
+  create_namespace = true
+
+  version = "0.10.0"
+
+  depends_on = [
+    aws_eks_cluster.eks_cluster,
+    aws_eks_node_group.cluster,
+    kubernetes_config_map.aws-auth,
+    helm_release.cilium,
+  ]
+}
 
 resource "kubectl_manifest" "cilium_target_group_binding_http" {
   yaml_body = <<YAML

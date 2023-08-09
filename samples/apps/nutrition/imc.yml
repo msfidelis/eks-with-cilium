@@ -8,6 +8,7 @@ kind: Deployment
 metadata:
   labels:
     app: imc-grpc
+    workload: nutrition
   name: imc-grpc
   namespace: imc
 spec:
@@ -19,11 +20,13 @@ spec:
     metadata:
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "30000"           
+        prometheus.io/port: "30000" 
+        policy.cilium.io/proxy-visibility: "<Egress/53/UDP/DNS>,<Egress/30000/TCP/HTTP>"
       labels:
         app: imc-grpc
         name: imc-grpc
         version: v1
+        workload: nutrition
     spec:
       containers:
       - image: fidelissauro/imc-grpc-service:latest
@@ -32,7 +35,7 @@ spec:
         - name: ENVIRONMENT
           value: "dev"
         - name: JAEGER_COLLECTOR_ENDPOINT
-          value: http://jaeger.jaeger.svc.cluster.local:14268/api/traces          
+          value: http://jaeger-collector.jaeger.svc.cluster.local:14268/api/traces          
         ports:
         - containerPort: 30000
           name: http   
