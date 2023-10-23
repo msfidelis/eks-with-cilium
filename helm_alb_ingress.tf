@@ -40,6 +40,7 @@ resource "helm_release" "alb_ingress_controller" {
     depends_on = [
         aws_eks_cluster.eks_cluster,
         aws_eks_node_group.cluster,
+        helm_release.cilium,
         kubernetes_config_map.aws-auth
     ]
 }

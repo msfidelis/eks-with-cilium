@@ -20,7 +20,8 @@ resource "helm_release" "prometheus" {
   depends_on = [
     aws_eks_cluster.eks_cluster,
     aws_eks_node_group.cluster,
-    kubernetes_config_map.aws-auth
+    kubernetes_config_map.aws-auth,
+    helm_release.cilium
   ]
 }
 
@@ -47,7 +48,7 @@ spec:
 YAML
 
   depends_on = [
-    helm_release.prometheus,
+    helm_release.prometheus
   ]
 
 }
@@ -66,7 +67,7 @@ resource "kubernetes_secret" "prometheus_scrape_configs" {
   type = "Opaque"
 
   depends_on = [
-    helm_release.prometheus,
+    helm_release.prometheus
   ]
 }
 
@@ -100,7 +101,7 @@ spec:
 YAML
 
   depends_on = [
-    helm_release.prometheus,
+    helm_release.prometheus
   ]
 
 }
