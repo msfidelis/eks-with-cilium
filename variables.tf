@@ -7,7 +7,7 @@ variable "aws_region" {
 }
 
 variable "k8s_version" {
-  default = "1.28"
+  default = "1.29"
 }
 
 variable "nodes_instances_sizes" {
@@ -64,6 +64,15 @@ variable "cilium_hubble_host" {
 }
 
 ##################################
+#        Pixie Configs          #
+##################################
+
+variable "cilium_hubble_host" {
+  type    = string
+  default = "pixie.msfidelis.com.br"
+}
+
+##################################
 #        Jaeger Configs          #
 ##################################
 
@@ -89,26 +98,26 @@ variable "grafana_host" {
 
 variable "addon_cni_version" {
   type        = string
-  description = "VPC CNI Version"
-  default     = "v1.12.6-eksbuild.1"
+  description = "Specifies the version of the AWS VPC CNI (Container Network Interface) plugin to use, which manages the network interfaces for pod networking."
+  default     = "v1.14.1-eksbuild.1"
 }
 
 variable "addon_coredns_version" {
   type        = string
-  description = "CoreDNS Version"
-  default     = "v1.10.1-eksbuild.2"
+  description = "Defines the version of CoreDNS to use, a DNS server/forwarder that is integral to internal Kubernetes DNS resolution."
+  default     = "v1.11.1-eksbuild.4"
 }
 
 variable "addon_kubeproxy_version" {
   type        = string
-  description = "Kubeproxy Version"
-  default     = "v1.27.3-eksbuild.2"
+  description = "Sets the version of Kubeproxy to be used, which handles Kubernetes network services like forwarding the requests to correct containers."
+  default     = "v1.29.0-eksbuild.1"
 }
 
 variable "addon_csi_version" {
   type        = string
-  description = "CSI Version"
-  default     = "v1.17.0-eksbuild.1"
+  description = "Indicates the version of the Container Storage Interface (CSI) driver to use for managing storage volumes in Kubernetes."
+  default     = "v1.26.1-eksbuild.1"
 }
 
 ##################################
@@ -118,13 +127,13 @@ variable "addon_csi_version" {
 variable "chaos_mesh_toggle" {
   type        = bool
   description = "Enable Chaos Mesh Installation"
-  default     = true
+  default     = false
 }
 
 variable "argo_rollouts_toggle" {
   type        = bool
   description = "Enable Argo Rollouts Installation"
-  default     = true
+  default     = false
 }
 
 variable "keda_toggle" {
@@ -136,7 +145,7 @@ variable "keda_toggle" {
 variable "cluster_autoscaler_toggle" {
   type        = bool
   description = "Enable Cluster Autoscaler Installation"
-  default     = true
+  default     = false
 }
 
 variable "descheduler_toggle" {
