@@ -67,7 +67,7 @@ variable "cilium_hubble_host" {
 #        Pixie Configs          #
 ##################################
 
-variable "cilium_hubble_host" {
+variable "cilium_pixie_host" {
   type    = string
   default = "pixie.msfidelis.com.br"
 }
