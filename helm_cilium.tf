@@ -7,7 +7,7 @@ resource "helm_release" "cilium" {
 
   create_namespace = true
 
-  version = "1.14"
+  version = "1.15.5"
 
   set {
     name  = "eni.enabled"
@@ -121,6 +121,11 @@ resource "helm_release" "cilium" {
   }
 
   set {
+    name  = "prometheus.serviceMonitor.trustCRDsExist"
+    value = true
+  }
+
+  set {
     name  = "prometheus.serviceMonitor.enabled"
     value = true
   }
@@ -143,6 +148,7 @@ resource "helm_release" "cilium" {
   depends_on = [
     aws_eks_cluster.eks_cluster,
     aws_eks_node_group.cluster,
+    helm_release.prometheus,
     kubernetes_config_map.aws-auth
   ]
 }
