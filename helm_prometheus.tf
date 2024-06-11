@@ -104,3 +104,20 @@ YAML
   ]
 
 }
+
+resource "helm_release" "tempo" {
+  name             = "tempo"
+  chart            = "tempo"
+  repository       = "https://grafana.github.io/helm-charts"
+  namespace        = "prometheus"
+  create_namespace = true
+
+  values = [
+    "${file("./helm/prometheus/tempo.yml")}"
+  ]
+
+
+  depends_on = [
+    helm_release.prometheus
+  ]
+}
