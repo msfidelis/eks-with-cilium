@@ -1,0 +1,10 @@
+admissionWebhooks:
+  create: false
+
+manager:
+  collectorImage:
+    repository: otel/opentelemetry-collector
+  serviceMonitor:
+    enabled: true
+  env:
+    ENABLE_WEBHOOKS: "false"

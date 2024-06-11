@@ -1,0 +1,32 @@
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: Gateway
+# metadata:
+#   name: health-api-gateway
+#   namespace: health-api
+# spec:
+#   gatewayClassName: cilium
+#   listeners:
+#   - name: http
+#     protocol: HTTP
+#     port: 80
+# ---
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: HTTPRoute
+# metadata:
+#   name: health-api-httproute
+#   namespace: health-api
+#   labels:
+#     app: health-api
+# spec:
+#   parentRefs:
+#   - name: health-api-gateway
+#   hostnames:
+#   - "health.msfidelis.com.br"
+#   rules:
+#   - matches:
+#     - path:
+#         type: PathPrefix
+#         value: /
+#     backendRefs:
+#     - name: health-api
+#       port: 8080
